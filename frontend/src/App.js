@@ -39,7 +39,7 @@ const App = () => {
       const user = await loginService.login({
         username, password
       })
-      window.localStorage.setItem( 'loggedNoteappUser', JSON.stringify(user) )
+      window.localStorage.setItem( 'loggedBlogUser', JSON.stringify(user) )
       blogService.setToken(user.token)
       setUser(user)
       setUsername('')
@@ -78,6 +78,17 @@ const App = () => {
     </form>
     </>
   )
+
+  const blogsView = () => {
+    return (
+      <>
+      <h1>Blogs</h1>
+      <p>{user.name} is logged in</p>
+      <Bloglist blogs={blogs}/>
+
+      </>
+    )
+  }
   
 
   return (
@@ -85,8 +96,8 @@ const App = () => {
       <Notification message={errorMessage} />
 
       { user === null && loginForm()}
+      { user !== null && blogsView()}
 
-      <Bloglist blogs={blogs} />
 
     </div>
   )
