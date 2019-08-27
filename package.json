@@ -1,11 +1,12 @@
 {
-  "name": "fso-part4",
+  "name": "fso-part5",
   "version": "1.0.0",
-  "description": "For FullStackOpen Part 4 Exercises: Blog",
+  "description": "For FullStackOpen Part 5 Exercises: Blog",
   "main": "index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=production node index.js",
     "watch": "cross-env NODE_ENV=development nodemon index.js",
+    "build:ui": "rm -rf build && cd/frontend && npm run build --prod && cp -r build ..",
     "deploy": "git push heroku master",
     "logs:prod": "heroku logs --tail",
     "lint": "eslint .",
