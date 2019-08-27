@@ -16,6 +16,7 @@ const App = () => {
   const [newUrl, setNewUrl] = useState('')
 
   const [errorMessage, setErrorMessage] = useState(null)
+  const [successMessage, setSuccessMessage] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   // eslint-disable-next-line
@@ -46,7 +47,6 @@ const App = () => {
         username, password
       })
 
-      // console.log(user)
       window.localStorage.setItem( 'loggedBlogUser', JSON.stringify(user) )
       blogService.setToken(user.token)
       setUser(user)
@@ -83,7 +83,18 @@ const App = () => {
       setNewAuthor('')
       setNewUrl('')
     })
-
+    .then(() => {
+      setSuccessMessage(`Added blog ${newTitle} by ${newAuthor}`)
+      setTimeout(() => {
+        setSuccessMessage(null)
+      }, 5000)
+    })
+    .catch(error => {
+      setErrorMessage('Failed to add blog')
+      setTimeout(()=> {
+        setErrorMessage(null)
+      }, 5000)
+    })
   }
 
   const handleTitle = ({ target }) => {
@@ -131,26 +142,23 @@ const App = () => {
         <h1>Blogs</h1>
         <p>{user.name} is logged in</p>
         <button id="logout" onClick={handleLogout}>logout</button>
-        <Bloglist blogs={blogs}/>
         <CreateBlog 
           addBlog={addBlog} 
           handleTitle={handleTitle} title={newTitle}
           handleAuthor={handleAuthor} author={newAuthor}
           handleUrl={handleUrl} url={newUrl}
         />
+        <Bloglist blogs={blogs}/>
       </>
     )
   }
   
-
   return (
     <div className="App">
-      <Notification message={errorMessage} />
-
+      <Notification message={errorMessage} messageType='error' />
+      <Notification message={successMessage} messageType='success' />
       { user === null && loginForm()}
       { user !== null && blogsView()}
-
-
     </div>
   )
 }
