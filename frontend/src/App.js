@@ -45,6 +45,8 @@ const App = () => {
       const user = await loginService.login({
         username, password
       })
+
+      // console.log(user)
       window.localStorage.setItem( 'loggedBlogUser', JSON.stringify(user) )
       blogService.setToken(user.token)
       setUser(user)
@@ -70,7 +72,7 @@ const App = () => {
       title: newTitle,
       author: newAuthor,
       url: newUrl,
-      // userId: user.userId
+      userId: user.userId
     }
 
     blogService
