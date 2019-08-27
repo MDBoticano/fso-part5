@@ -28,7 +28,7 @@ const App = () => {
     const loggedInUser = window.localStorage.getItem('loggedBlogUser')
     if (loggedInUser) {
       const user = JSON.parse(loggedInUser)
-      setUsername(user)
+      setUser(user)
       blogService.setToken(user.token)
     }
   }, [])
@@ -50,6 +50,12 @@ const App = () => {
         setErrorMessage(null)
       }, 5000)
     }
+  }
+
+  const handleLogout = (event) => {
+    event.preventDefault()
+    window.localStorage.removeItem('loggedNoteappUser')
+    setUser(null)
   }
 
   const loginForm = () => (
@@ -84,6 +90,7 @@ const App = () => {
       <>
       <h1>Blogs</h1>
       <p>{user.name} is logged in</p>
+      <button id="logout" onClick={handleLogout}>logout</button>
       <Bloglist blogs={blogs}/>
 
       </>
