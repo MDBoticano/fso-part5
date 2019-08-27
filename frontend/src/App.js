@@ -84,7 +84,11 @@ const App = () => {
       setNewUrl('')
     })
     .then(() => {
-      setSuccessMessage(`Added blog ${newTitle} by ${newAuthor}`)
+      if(newAuthor) {
+        setSuccessMessage(`Added blog ${newTitle} by ${newAuthor}`)
+      } else {
+        setSuccessMessage(`Added blog ${newTitle}`)
+      }
       setTimeout(() => {
         setSuccessMessage(null)
       }, 5000)
