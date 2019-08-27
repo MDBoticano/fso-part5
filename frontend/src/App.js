@@ -2,6 +2,7 @@ import React, {useState, useEffect } from 'react';
 
 import Notification from './components/Notification'
 import Bloglist from './components/Bloglist'
+import CreateBlog from './components/CreateBlog'
 
 import blogService from './services/blogs'
 import loginService from './services/login'
@@ -9,6 +10,11 @@ import loginService from './services/login'
 const App = () => {
   /* State values */
   const [blogs, setBlogs] = useState([])
+
+  const [newTitle, setNewTitle] = useState('')
+  const [newAuthor, setNewAuthor] = useState('')
+  const [newUrl, setNewUrl] = useState('')
+
   const [errorMessage, setErrorMessage] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -58,6 +64,38 @@ const App = () => {
     setUser(null)
   }
 
+  const addBlog = (event) => {
+    event.preventDefault()
+    const blogObject = {
+      title: newTitle,
+      author: newAuthor,
+      url: newUrl,
+      // userId: user.userId
+    }
+
+    blogService
+    .create(blogObject)
+    .then(data => {
+      setBlogs(blogs.concat(data))
+      setNewTitle('')
+      setNewAuthor('')
+      setNewUrl('')
+    })
+
+  }
+
+  const handleTitle = ({ target }) => {
+    setNewTitle(target.value)
+  }
+
+  const handleAuthor = ({ target }) => {
+    setNewAuthor(target.value)
+  }
+
+  const handleUrl = ({ target }) => {
+    setNewUrl(target.value)
+  }
+
   const loginForm = () => (
     <>
     <h2>Login</h2>
@@ -88,11 +126,16 @@ const App = () => {
   const blogsView = () => {
     return (
       <>
-      <h1>Blogs</h1>
-      <p>{user.name} is logged in</p>
-      <button id="logout" onClick={handleLogout}>logout</button>
-      <Bloglist blogs={blogs}/>
-
+        <h1>Blogs</h1>
+        <p>{user.name} is logged in</p>
+        <button id="logout" onClick={handleLogout}>logout</button>
+        <Bloglist blogs={blogs}/>
+        <CreateBlog 
+          addBlog={addBlog} 
+          handleTitle={handleTitle} title={newTitle}
+          handleAuthor={handleAuthor} author={newAuthor}
+          handleUrl={handleUrl} url={newUrl}
+        />
       </>
     )
   }
