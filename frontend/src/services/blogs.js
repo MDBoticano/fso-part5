@@ -31,7 +31,13 @@ const update = (objId, newObject) => {
 }
 
 const deleteEntry = (objId) => {
-  const request = axios.delete(`${baseUrl}/${objId}`)
+  const config  = {
+    headers: { Authorization: token }
+  }
+
+  const request = axios.delete(`${baseUrl}/${objId}`, config)
+
+  console.log('Deleting entry at id', `${objId}`)
 
   return request.then(() => {
     return getAll()

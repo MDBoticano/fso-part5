@@ -165,8 +165,19 @@ const App = () => {
     }
   }
 
-  const handleDelete = (blog) => {
-    console.log('delete request for ', blog.id)
+  const handleDelete = async (blog) => {
+    const blogId = blog.id
+
+    try {
+      const updatedBlogsList = await blogService.deleteEntry(blogId)
+      setBlogs(updatedBlogsList)
+
+    } catch (error) {
+      setErrorMessage('Failed to delete blog')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
   }
 
   const handleUsername = ({ target }) => {
