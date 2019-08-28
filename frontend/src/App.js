@@ -165,6 +165,10 @@ const App = () => {
     }
   }
 
+  const handleDelete = (blog) => {
+    console.log('delete request for ', blog.id)
+  }
+
   const handleUsername = ({ target }) => {
     setUsername(target.value)
   }
@@ -220,7 +224,11 @@ const App = () => {
         <button id="toggle-bloglist-sort" onClick={listSortToggle}>
           Sort by # of likes: {sortDirection}
         </button>
-        <Bloglist blogs={blogs} handleLike={handleLike} />
+        <Bloglist 
+          blogs={blogs} 
+          handleLike={handleLike} 
+          handleDelete={handleDelete} 
+        />
       </>
     )
   }
