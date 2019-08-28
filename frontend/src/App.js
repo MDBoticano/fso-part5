@@ -106,12 +106,33 @@ const App = () => {
 
   /* 5.7: send PUT request to update blog */
   const handleLike = (blog) => {
-    console.log('blog liked')
+    const blogId = blog.id
 
-    console.log(blog)
-    // const blogObject = {
+    const blogObject = {
+      title: blog.title,
+      author: blog.author,
+      url: blog.url,
+      likes: blog.likes + 1,
+      id: blogId
+    }
 
-    // }
+    blogService
+      .update(blogId, blogObject)
+      .then(updatedEntry => {
+        setBlogs(blogs.map(entry => {
+          if (entry.id !== blogId) {
+            return entry
+          } else {
+            return updatedEntry
+          }
+        }))
+      })
+      .catch(error => {
+        setErrorMessage('Failed to like blog')
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+      })
   }
 
   const handleUsername = ({ target }) => {
