@@ -105,8 +105,13 @@ const App = () => {
   }
 
   /* 5.7: send PUT request to update blog */
-  const handleLike = () => {
+  const handleLike = (blog) => {
     console.log('blog liked')
+
+    console.log(blog)
+    // const blogObject = {
+
+    // }
   }
 
   const handleUsername = ({ target }) => {
