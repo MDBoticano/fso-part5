@@ -23,11 +23,32 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
+
+  const sortBlogs = (blogsArray, direction = 'descending') => {
+    const blogsArrayCopy = [...blogsArray]
+    if(direction === 'ascending') {
+      blogsArrayCopy.sort((a, b) => a.likes - b.likes)
+    } 
+    else if (direction ==='descending') {
+      blogsArrayCopy.sort((a, b) => b.likes - a.likes)
+    }
+    return blogsArrayCopy
+  }
+
   /* useEffect hooks */
   // Get the blogs from the server
-  useEffect(async () => {
-    const initialBlogs = await blogService.getAll()
-    setBlogs(initialBlogs)
+  useEffect(() => {
+      async function fetchBlogs() {
+      const initialBlogs = await blogService.getAll()
+      
+      // setBlogs(initialBlogs)
+
+      // Load blogs sorted
+      const sortedBlogs = sortBlogs(initialBlogs)
+      setBlogs(sortedBlogs)
+    }
+
+    fetchBlogs()
   }, [])
 
   // Check for logged in user
