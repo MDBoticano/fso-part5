@@ -68,7 +68,7 @@ const App = () => {
     setUser(null)
   }
 
-  const addBlog = (event) => {
+  const addBlog = async (event) => {
     event.preventDefault()
     blogFormRef.current.toggleVisibility()
     const blogObject = {
@@ -78,30 +78,29 @@ const App = () => {
       userId: user.userId
     }
 
-    blogService
-      .create(blogObject)
-      .then(data => {
-        setBlogs(blogs.concat(data))
-        setNewTitle('')
-        setNewAuthor('')
-        setNewUrl('')
-      })
-      .then(() => {
-        if (newAuthor) {
-          setSuccessMessage(`Added blog ${newTitle} by ${newAuthor}`)
-        } else {
-          setSuccessMessage(`Added blog ${newTitle}`)
-        }
-        setTimeout(() => {
-          setSuccessMessage(null)
-        }, 5000)
-      })
-      .catch(error => {
-        setErrorMessage('Failed to add blog')
-        setTimeout(() => {
-          setErrorMessage(null)
-        }, 5000)
-      })
+    try { 
+      const newBlog = await blogService.create(blogObject)
+      setBlogs(blogs.concat(newBlog))
+
+      if (newAuthor) {
+        setSuccessMessage(`Added blog ${newTitle} by ${newAuthor}`)
+      } else {
+        setSuccessMessage(`Added blog ${newTitle}`)
+      }
+      setTimeout(() => {
+        setSuccessMessage(null)
+      }, 5000)
+
+      setNewTitle('')
+      setNewAuthor('')
+      setNewUrl('')
+    }
+    catch (error) {
+      setErrorMessage('Failed to add blog')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
   }
 
   /* 5.7: send PUT request to update blog */
