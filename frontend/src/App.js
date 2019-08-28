@@ -32,9 +32,9 @@ const App = () => {
 
   const sortBlogs = (blogsArray, direction = DESCENDING) => {
     const blogsArrayCopy = [...blogsArray]
-    if(direction === ASCENDING) {
+    if (direction === ASCENDING) {
       blogsArrayCopy.sort((a, b) => a.likes - b.likes)
-    } 
+    }
     else if (direction === DESCENDING) {
       blogsArrayCopy.sort((a, b) => b.likes - a.likes)
     }
@@ -44,9 +44,9 @@ const App = () => {
   /* useEffect hooks */
   // Get the blogs from the server
   useEffect(() => {
-      async function fetchBlogs() {
+    async function fetchBlogs() {
       const initialBlogs = await blogService.getAll()
-      
+
       // setBlogs(initialBlogs)
 
       // Load blogs sorted (descending by default)
@@ -103,7 +103,7 @@ const App = () => {
       userId: user.userId
     }
 
-    try { 
+    try {
       const newBlog = await blogService.create(blogObject)
       const updatedBlogsList = blogs.concat(newBlog)
       // setBlogs(updatedBlogsList)
@@ -143,7 +143,7 @@ const App = () => {
       id: blogId
     }
 
-    try { 
+    try {
       const updatedBlog = await blogService.update(blogId, blogObject)
       const updatedBlogsList = blogs.map(entry => {
         if (entry.id !== blogId) {
@@ -156,8 +156,8 @@ const App = () => {
 
       // to sort blogs after updating: 
       // setBlogs(sortBlogs(updatedBlogsList, sortDirection))
-      
-    } catch (error) { 
+
+    } catch (error) {
       setErrorMessage('Failed to like blog')
       setTimeout(() => {
         setErrorMessage(null)
@@ -169,9 +169,10 @@ const App = () => {
     const blogId = blog.id
 
     try {
-      const updatedBlogsList = await blogService.deleteEntry(blogId)
-      setBlogs(updatedBlogsList)
-
+      if (window.confirm(`Do you want to delete ${blog.title}`)) {
+        const updatedBlogsList = await blogService.deleteEntry(blogId)
+        setBlogs(updatedBlogsList)
+      }
     } catch (error) {
       setErrorMessage('Failed to delete blog')
       setTimeout(() => {
@@ -235,10 +236,10 @@ const App = () => {
         <button id="toggle-bloglist-sort" onClick={listSortToggle}>
           Sort by # of likes: {sortDirection}
         </button>
-        <Bloglist 
-          blogs={blogs} 
-          handleLike={handleLike} 
-          handleDelete={handleDelete} 
+        <Bloglist
+          blogs={blogs}
+          handleLike={handleLike}
+          handleDelete={handleDelete}
         />
       </>
     )
