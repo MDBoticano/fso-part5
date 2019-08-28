@@ -34,3 +34,12 @@
 #create-blog input {
   display: table-cell;
 }
+
+.blog-entry {
+  margin: .5em 0;
+  border: solid 1px black;
+}
+
+.blogDetails p {
+  margin: 0;
+}

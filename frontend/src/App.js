@@ -104,6 +104,11 @@ const App = () => {
       })
   }
 
+  /* 5.7: send PUT request to update blog */
+  const handleLike = () => {
+    console.log('blog liked')
+  }
+
   const handleUsername = ({ target }) => {
     setUsername(target.value)
   }
@@ -150,7 +155,7 @@ const App = () => {
             handleUrl={handleUrl} url={newUrl}
           />
         </Toggleable>
-        <Bloglist blogs={blogs} />
+        <Bloglist blogs={blogs} handleLike={handleLike}/>
       </>
     )
   }
