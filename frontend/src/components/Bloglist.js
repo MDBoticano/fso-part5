@@ -2,7 +2,7 @@ import React from 'react'
 
 import Blog from './Blog'
 
-const Bloglist = ({ blogs, handleLike, handleDelete }) => {
+const Bloglist = ({ blogs, handleLike, handleDelete, currentUserId }) => {
 
   const blogsList = () => blogs.map((blog) => 
     <Blog 
@@ -10,6 +10,7 @@ const Bloglist = ({ blogs, handleLike, handleDelete }) => {
       blog={blog} 
       handleLike={() => handleLike(blog)}
       handleDelete={() => handleDelete(blog)}
+      currentUserId={currentUserId}
     />
   )
 

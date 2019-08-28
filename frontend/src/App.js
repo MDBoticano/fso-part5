@@ -237,7 +237,7 @@ const App = () => {
           Sort by # of likes: {sortDirection}
         </button>
         <Bloglist
-          blogs={blogs}
+          blogs={blogs} currentUserId={user.userId}
           handleLike={handleLike}
           handleDelete={handleDelete}
         />
