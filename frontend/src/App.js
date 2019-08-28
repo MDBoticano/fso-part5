@@ -21,15 +21,13 @@ const App = () => {
   const [successMessage, setSuccessMessage] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  // eslint-disable-next-line
   const [user, setUser] = useState(null)
 
   /* useEffect hooks */
   // Get the blogs from the server
-  useEffect(() => {
-    blogService
-      .getAll()
-      .then(initialBlogs => setBlogs(initialBlogs))
+  useEffect(async () => {
+    const initialBlogs = await blogService.getAll()
+    setBlogs(initialBlogs)
   }, [])
 
   // Check for logged in user
