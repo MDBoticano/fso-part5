@@ -27,19 +27,17 @@ const Blog = ({ blog, handleLike }) => {
     }
   }
 
-  const blogListHasAuthor = () => {
+  const blogHasAuthor = () => {
     if (blog.author) {
-      return <div className="blog-title">{blog.title} by {blog.author}</div>
-    } else {
-      return <div className="blog-title">{blog.title}</div>
+      return `by ${blog.author}`
     }
   }
 
   return (
     <div className="blog-entry">
-      <button className="detailsToggle" onClick={toggleDetails}>
-        {blogListHasAuthor()}
-      </button>
+      <div className="blog-summary" onClick={toggleDetails}>
+        <p> {blog.title} {blogHasAuthor()}</p>
+      </div>
       {detailsVisible && blogDetails()}
     </div>
   )

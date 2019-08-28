@@ -9,9 +9,9 @@ const Bloglist = ({ blogs, handleLike }) => {
   )
 
   return (
-    <>
+    <div id="bloglist">
       {blogsList()}
-    </>
+    </div>
   )
 }
 

@@ -1,3 +1,12 @@
+.App {
+  padding: 2em;
+}
+
+#page-title {
+  margin: 0 0 0.5em 0;
+  padding: 0;
+}
+
 .error {
   color: red;
   background: lightgrey;
@@ -35,19 +44,34 @@
   display: table-cell;
 }
 
+.logged-user {
+  margin: 0 0 .25em 0;
+}
+
+#blog-create-toggleable {
+  margin: 1em 0;
+}
+
 .blog-entry {
   margin: .5em 0;
   padding: .5em;
   border: solid 1px black;
 }
 
-.blog-entry .detailsToggle{
-  padding: 0;
-  background-color: white;
+.blog-summary {
+  margin: 0;
   border: 0px;
   font-size: 1.25em;
 }
 
+.blog-summary p {
+  margin: 0;
+}
+
 .blogDetails p {
   margin: .25em 0;
+}
+
+.blogDetails .blog-user {
+  margin: 1em 0 0 0;
 }

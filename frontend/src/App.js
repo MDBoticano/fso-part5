@@ -144,24 +144,26 @@ const App = () => {
   const blogsView = () => {
     return (
       <>
-        <h1>Blogs</h1>
-        <p>{user.name} is logged in</p>
+        <p className="logged-user">{user.name} is logged in</p>
         <button id="logout" onClick={handleLogout}>logout</button>
-        <Toggleable buttonLabel="new blog" ref={blogFormRef}>
-          <CreateBlog
-            addBlog={addBlog}
-            handleTitle={handleTitle} title={newTitle}
-            handleAuthor={handleAuthor} author={newAuthor}
-            handleUrl={handleUrl} url={newUrl}
-          />
-        </Toggleable>
-        <Bloglist blogs={blogs} handleLike={handleLike}/>
+        <div id="blog-create-toggleable">
+          <Toggleable buttonLabel="new blog" ref={blogFormRef}>
+            <CreateBlog
+              addBlog={addBlog}
+              handleTitle={handleTitle} title={newTitle}
+              handleAuthor={handleAuthor} author={newAuthor}
+              handleUrl={handleUrl} url={newUrl}
+            />
+          </Toggleable>
+        </div>
+        <Bloglist blogs={blogs} handleLike={handleLike} />
       </>
     )
   }
 
   return (
     <div className="App">
+      <h1 id="page-title">Blogs</h1>
       <Notification message={errorMessage} messageType='error' />
       <Notification message={successMessage} messageType='success' />
       {user === null && loginForm()}
