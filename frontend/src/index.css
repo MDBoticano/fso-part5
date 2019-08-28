@@ -19,5 +19,18 @@
 }
 
 #create-blog {
-  display: grid;
+  margin: 0.25em 0;
+  display: table;
+}
+
+#create-blog .blog-input {
+  display: table-row;
+}
+
+#create-blog label {
+  display: table-cell;
+}
+
+#create-blog input {
+  display: table-cell;
 }
