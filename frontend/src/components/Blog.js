@@ -12,8 +12,10 @@ const Blog = ({ blog, handleLike }) => {
     return (
       <div className="blogDetails">
         <p className="blog-url">{blog.url}</p>
-        <p className="blog-likes">{blog.likes} likes</p>
-        <button className="like-btn" onClick={handleLike}>Like</button>
+        <div className="blog-likes">
+          <p className="num-likes">{blog.likes} likes</p>
+          <button className="like-btn" onClick={handleLike}>Like</button>
+        </div>
         {blogListHasUser()}
       </div>
     )
