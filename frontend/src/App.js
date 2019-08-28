@@ -1,5 +1,7 @@
 import React, {useState, useEffect } from 'react';
 
+import Toggleable from './components/Toggleable'
+import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
 import Bloglist from './components/Bloglist'
 import CreateBlog from './components/CreateBlog'
@@ -101,6 +103,14 @@ const App = () => {
     })
   }
 
+  const handleUsername = ({ target }) => {
+    setUsername(target.value)
+  }
+
+  const handlePassword = ({ target }) => {
+    setPassword(target.value)
+  }
+
   const handleTitle = ({ target }) => {
     setNewTitle(target.value)
   }
@@ -114,30 +124,13 @@ const App = () => {
   }
 
   const loginForm = () => (
-    <>
-    <h2>Login</h2>
-    <form onSubmit={handleLogin}>
-      <div>
-        username
-            <input
-          type="text"
-          value={username}
-          name="Username"
-          onChange={({ target }) => setUsername(target.value)}
-        />
-      </div>
-      <div>
-        password
-            <input
-          type="password"
-          value={password}
-          name="Password"
-          onChange={({ target }) => setPassword(target.value)}
-        />
-      </div>
-      <button type="submit">login</button>
-    </form>
-    </>
+    <Toggleable buttonLabel ="login">
+      <LoginForm
+        username={username} handleUsername={handleUsername} 
+        password={password} handlePassword={handlePassword}
+        handleLogin={handleLogin}
+      />
+    </Toggleable>
   )
 
   const blogsView = () => {
