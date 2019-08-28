@@ -5,5 +5,5 @@ Content-Type: application/json
   "title": "My Monday",
   "author": "Mark",
   "url": "www.marloboticano.com",
-  "likes": 101
+  "likes": 102
 }
