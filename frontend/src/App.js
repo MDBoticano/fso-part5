@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Toggleable from './components/Toggleable'
 import LoginForm from './components/LoginForm'
@@ -49,7 +49,7 @@ const App = () => {
         username, password
       })
 
-      window.localStorage.setItem( 'loggedBlogUser', JSON.stringify(user) )
+      window.localStorage.setItem('loggedBlogUser', JSON.stringify(user))
       blogService.setToken(user.token)
       setUser(user)
       setUsername('')
@@ -70,6 +70,7 @@ const App = () => {
 
   const addBlog = (event) => {
     event.preventDefault()
+    blogFormRef.current.toggleVisibility()
     const blogObject = {
       title: newTitle,
       author: newAuthor,
@@ -78,29 +79,29 @@ const App = () => {
     }
 
     blogService
-    .create(blogObject)
-    .then(data => {
-      setBlogs(blogs.concat(data))
-      setNewTitle('')
-      setNewAuthor('')
-      setNewUrl('')
-    })
-    .then(() => {
-      if(newAuthor) {
-        setSuccessMessage(`Added blog ${newTitle} by ${newAuthor}`)
-      } else {
-        setSuccessMessage(`Added blog ${newTitle}`)
-      }
-      setTimeout(() => {
-        setSuccessMessage(null)
-      }, 5000)
-    })
-    .catch(error => {
-      setErrorMessage('Failed to add blog')
-      setTimeout(()=> {
-        setErrorMessage(null)
-      }, 5000)
-    })
+      .create(blogObject)
+      .then(data => {
+        setBlogs(blogs.concat(data))
+        setNewTitle('')
+        setNewAuthor('')
+        setNewUrl('')
+      })
+      .then(() => {
+        if (newAuthor) {
+          setSuccessMessage(`Added blog ${newTitle} by ${newAuthor}`)
+        } else {
+          setSuccessMessage(`Added blog ${newTitle}`)
+        }
+        setTimeout(() => {
+          setSuccessMessage(null)
+        }, 5000)
+      })
+      .catch(error => {
+        setErrorMessage('Failed to add blog')
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+      })
   }
 
   const handleUsername = ({ target }) => {
@@ -124,14 +125,16 @@ const App = () => {
   }
 
   const loginForm = () => (
-    <Toggleable buttonLabel ="login">
+    <Toggleable buttonLabel="login">
       <LoginForm
-        username={username} handleUsername={handleUsername} 
+        username={username} handleUsername={handleUsername}
         password={password} handlePassword={handlePassword}
         handleLogin={handleLogin}
       />
     </Toggleable>
   )
+
+  const blogFormRef = React.createRef()
 
   const blogsView = () => {
     return (
@@ -139,23 +142,25 @@ const App = () => {
         <h1>Blogs</h1>
         <p>{user.name} is logged in</p>
         <button id="logout" onClick={handleLogout}>logout</button>
-        <CreateBlog 
-          addBlog={addBlog} 
-          handleTitle={handleTitle} title={newTitle}
-          handleAuthor={handleAuthor} author={newAuthor}
-          handleUrl={handleUrl} url={newUrl}
-        />
-        <Bloglist blogs={blogs}/>
+        <Toggleable buttonLabel="new blog" ref={blogFormRef}>
+          <CreateBlog
+            addBlog={addBlog}
+            handleTitle={handleTitle} title={newTitle}
+            handleAuthor={handleAuthor} author={newAuthor}
+            handleUrl={handleUrl} url={newUrl}
+          />
+        </Toggleable>
+        <Bloglist blogs={blogs} />
       </>
     )
   }
-  
+
   return (
     <div className="App">
       <Notification message={errorMessage} messageType='error' />
       <Notification message={successMessage} messageType='success' />
-      { user === null && loginForm()}
-      { user !== null && blogsView()}
+      {user === null && loginForm()}
+      {user !== null && blogsView()}
     </div>
   )
 }
