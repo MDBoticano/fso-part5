@@ -37,9 +37,17 @@
 
 .blog-entry {
   margin: .5em 0;
+  padding: .5em;
   border: solid 1px black;
 }
 
+.blog-entry .detailsToggle{
+  padding: 0;
+  background-color: white;
+  border: 0px;
+  font-size: 1.25em;
+}
+
 .blogDetails p {
-  margin: 0;
+  margin: .25em 0;
 }
