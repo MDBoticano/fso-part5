@@ -94,8 +94,7 @@ const App = () => {
       setNewTitle('')
       setNewAuthor('')
       setNewUrl('')
-    }
-    catch (error) {
+    } catch (error) {
       setErrorMessage('Failed to add blog')
       setTimeout(() => {
         setErrorMessage(null)
@@ -104,7 +103,7 @@ const App = () => {
   }
 
   /* 5.7: send PUT request to update blog */
-  const handleLike = (blog) => {
+  const handleLike = async (blog) => {
     const blogId = blog.id
 
     const blogObject = {
@@ -115,23 +114,21 @@ const App = () => {
       id: blogId
     }
 
-    blogService
-      .update(blogId, blogObject)
-      .then(updatedEntry => {
-        setBlogs(blogs.map(entry => {
-          if (entry.id !== blogId) {
-            return entry
-          } else {
-            return updatedEntry
-          }
-        }))
-      })
-      .catch(error => {
-        setErrorMessage('Failed to like blog')
-        setTimeout(() => {
-          setErrorMessage(null)
-        }, 5000)
-      })
+    try { 
+      const updatedBlog = await blogService.update(blogId, blogObject)
+      setBlogs(blogs.map(entry => {
+        if (entry.id !== blogId) {
+          return entry
+        } else {
+          return updatedBlog
+        }
+      }))
+    } catch (error) { 
+      setErrorMessage('Failed to like blog')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
   }
 
   const handleUsername = ({ target }) => {
