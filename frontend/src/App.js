@@ -10,6 +10,10 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 
 const App = () => {
+  const ASCENDING = 'ascending'
+  const DESCENDING = 'descending'
+
+
   /* State values */
   const [blogs, setBlogs] = useState([])
 
@@ -23,13 +27,15 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
+  const [sortDirection, setSortDirection] = useState(DESCENDING)
 
-  const sortBlogs = (blogsArray, direction = 'descending') => {
+
+  const sortBlogs = (blogsArray, direction = DESCENDING) => {
     const blogsArrayCopy = [...blogsArray]
-    if(direction === 'ascending') {
+    if(direction === ASCENDING) {
       blogsArrayCopy.sort((a, b) => a.likes - b.likes)
     } 
-    else if (direction ==='descending') {
+    else if (direction === DESCENDING) {
       blogsArrayCopy.sort((a, b) => b.likes - a.likes)
     }
     return blogsArrayCopy
@@ -43,13 +49,13 @@ const App = () => {
       
       // setBlogs(initialBlogs)
 
-      // Load blogs sorted
-      const sortedBlogs = sortBlogs(initialBlogs)
+      // Load blogs sorted (descending by default)
+      const sortedBlogs = sortBlogs(initialBlogs, sortDirection)
       setBlogs(sortedBlogs)
     }
 
     fetchBlogs()
-  }, [])
+  }, [sortDirection])
 
   // Check for logged in user
   useEffect(() => {
@@ -99,7 +105,11 @@ const App = () => {
 
     try { 
       const newBlog = await blogService.create(blogObject)
-      setBlogs(blogs.concat(newBlog))
+      const updatedBlogsList = blogs.concat(newBlog)
+      // setBlogs(updatedBlogsList)
+
+      // to sort after adding: 
+      setBlogs(sortBlogs(updatedBlogsList, sortDirection))
 
       if (newAuthor) {
         setSuccessMessage(`Added blog ${newTitle} by ${newAuthor}`)
@@ -135,13 +145,18 @@ const App = () => {
 
     try { 
       const updatedBlog = await blogService.update(blogId, blogObject)
-      setBlogs(blogs.map(entry => {
+      const updatedBlogsList = blogs.map(entry => {
         if (entry.id !== blogId) {
           return entry
         } else {
           return updatedBlog
         }
-      }))
+      })
+      setBlogs(updatedBlogsList)
+
+      // to sort blogs after updating: 
+      // setBlogs(sortBlogs(updatedBlogsList, sortDirection))
+      
     } catch (error) { 
       setErrorMessage('Failed to like blog')
       setTimeout(() => {
@@ -168,6 +183,11 @@ const App = () => {
 
   const handleUrl = ({ target }) => {
     setNewUrl(target.value)
+  }
+
+  const listSortToggle = () => {
+    if (sortDirection === ASCENDING) { setSortDirection(DESCENDING) }
+    if (sortDirection === DESCENDING) { setSortDirection(ASCENDING) }
   }
 
   const loginForm = () => (
@@ -197,6 +217,9 @@ const App = () => {
             />
           </Toggleable>
         </div>
+        <button id="toggle-bloglist-sort" onClick={listSortToggle}>
+          Sort by # of likes: {sortDirection}
+        </button>
         <Bloglist blogs={blogs} handleLike={handleLike} />
       </>
     )
