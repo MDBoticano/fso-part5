@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 
 import Toggleable from './components/Toggleable'
 import LoginForm from './components/LoginForm'
@@ -108,7 +108,7 @@ const App = () => {
       const updatedBlogsList = blogs.concat(newBlog)
       // setBlogs(updatedBlogsList)
 
-      // to sort after adding: 
+      // to sort after adding:
       setBlogs(sortBlogs(updatedBlogsList, sortDirection))
 
       if (newAuthor) {
@@ -154,7 +154,7 @@ const App = () => {
       })
       setBlogs(updatedBlogsList)
 
-      // to sort blogs after updating: 
+      // to sort blogs after updating:
       // setBlogs(sortBlogs(updatedBlogsList, sortDirection))
 
     } catch (error) {
