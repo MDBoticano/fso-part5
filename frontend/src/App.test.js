@@ -4,7 +4,7 @@ jest.mock('./services/blogs')
 import App from './App'
 
 describe('<App />', () => {
-  test('if no user logged, notes are not rendered', async () => {
+  test('if no user logged, blogs are not rendered', async () => {
     const component = render(
       <App />
     )
@@ -12,10 +12,13 @@ describe('<App />', () => {
 
     /* Waits for the login button to show */
     await waitForElement(
-      () => component.container.querySelector('.toggleable--hide-btn')
+      // () => component.container.querySelector('.toggleable--hide-btn')
       
       // Suggested check to wait for data to load
       // () => component.getByText('login')
+
+      // Alternative: wait for login form to be in DOM (but hidden)
+      () => component.container.querySelector('#loginForm')
     ) 
 
       // If there's no user logged in (default), Only display login form
