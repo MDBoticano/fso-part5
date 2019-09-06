@@ -6,7 +6,7 @@ const LoginForm = ({
   password, handlePassword 
 }) => {
   return (
-    <div id="#loginForm">
+    <div id="loginForm">
       <h2>Login</h2>
       <form onSubmit={handleLogin}>
         <div>
