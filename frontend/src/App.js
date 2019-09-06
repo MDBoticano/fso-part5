@@ -19,13 +19,13 @@ const App = () => {
   /* State values */
   const [blogs, setBlogs] = useState([])
 
-  const [newTitle, setNewTitle] = useState('')
-  const [newAuthor, setNewAuthor] = useState('')
-  const [newUrl, setNewUrl] = useState('')
+  // const [newTitle, setNewTitle] = useState('')
+  // const [newAuthor, setNewAuthor] = useState('')
+  // const [newUrl, setNewUrl] = useState('')
 
-  // const formTitle = useField('')
-  // const formAuthor = useField('')
-  // const formUrl = useField('')
+  const formTitle = useField('')
+  const formAuthor = useField('')
+  const formUrl = useField('')
 
   const [errorMessage, setErrorMessage] = useState(null)
   const [successMessage, setSuccessMessage] = useState(null)
@@ -94,6 +94,9 @@ const App = () => {
       setUser(user)
       // setUsername('')
       // setPassword('')
+
+      loginUsername.reset()
+      loginPassword.reset()
     } catch (exception) {
       setErrorMessage('Wrong credentials')
       setTimeout(() => {
@@ -112,9 +115,14 @@ const App = () => {
     event.preventDefault()
     blogFormRef.current.toggleVisibility()
     const blogObject = {
-      title: newTitle,
-      author: newAuthor,
-      url: newUrl,
+      // title: newTitle,
+      // author: newAuthor,
+      // url: newUrl,
+      
+      title: formTitle.value,
+      author: formAuthor.value,
+      url: formUrl.value,
+
       userId: user.userId
     }
 
@@ -126,18 +134,25 @@ const App = () => {
       // to sort after adding:
       setBlogs(sortBlogs(updatedBlogsList, sortDirection))
 
-      if (newAuthor) {
-        setSuccessMessage(`Added blog ${newTitle} by ${newAuthor}`)
+      // if (newAuthor) {
+      if (formAuthor.value) {
+        // setSuccessMessage(`Added blog ${newTitle} by ${newAuthor}`)
+        setSuccessMessage(`Added blog ${formTitle.value} by ${formAuthor.value}`)
       } else {
-        setSuccessMessage(`Added blog ${newTitle}`)
+        // setSuccessMessage(`Added blog ${newTitle}`)
+        setSuccessMessage(`Added blog ${formTitle.value}`)
       }
       setTimeout(() => {
         setSuccessMessage(null)
       }, 5000)
 
-      setNewTitle('')
-      setNewAuthor('')
-      setNewUrl('')
+      // setNewTitle('')
+      // setNewAuthor('')
+      // setNewUrl('')
+
+      formTitle.reset()
+      formAuthor.reset()
+      formUrl.reset()
     } catch (error) {
       setErrorMessage('Failed to add blog')
       setTimeout(() => {
@@ -204,17 +219,17 @@ const App = () => {
   //   setPassword(target.value)
   // }
 
-  const handleTitle = ({ target }) => {
-    setNewTitle(target.value)
-  }
+  // const handleTitle = ({ target }) => {
+  //   setNewTitle(target.value)
+  // }
 
-  const handleAuthor = ({ target }) => {
-    setNewAuthor(target.value)
-  }
+  // const handleAuthor = ({ target }) => {
+  //   setNewAuthor(target.value)
+  // }
 
-  const handleUrl = ({ target }) => {
-    setNewUrl(target.value)
-  }
+  // const handleUrl = ({ target }) => {
+  //   setNewUrl(target.value)
+  // }
 
   const listSortToggle = () => {
     if (sortDirection === ASCENDING) { setSortDirection(DESCENDING) }
@@ -242,9 +257,12 @@ const App = () => {
           <Toggleable buttonLabel="new blog" ref={blogFormRef}>
             <CreateBlog
               addBlog={addBlog}
-              handleTitle={handleTitle} title={newTitle}
-              handleAuthor={handleAuthor} author={newAuthor}
-              handleUrl={handleUrl} url={newUrl}
+              // handleTitle={handleTitle} title={newTitle}
+              handleTitle={formTitle.onChange} title={formTitle.value}
+              // handleAuthor={handleAuthor} author={newAuthor}
+              handleAuthor={formAuthor.onChange} author={formAuthor.value}
+              // handleUrl={handleUrl} url={newUrl}
+              handleUrl={formUrl.onChange} url={formUrl.value}
             />
           </Toggleable>
         </div>
