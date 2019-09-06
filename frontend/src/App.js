@@ -6,7 +6,7 @@ import Notification from './components/Notification'
 import Bloglist from './components/Bloglist'
 import CreateBlog from './components/CreateBlog'
 
-import blogService from './services/blogs'
+// import blogService from './services/blogs'
 import loginService from './services/login'
 
 import { useField, useResource } from './hooks/index'
@@ -17,7 +17,8 @@ const App = () => {
 
 
   /* State values */
-  const [blogs, setBlogs] = useState([])
+  // const [blogs, setBlogs] = useState([])
+  const [blogs, blogService] = useResource('/api/blogs')
 
   // const [newTitle, setNewTitle] = useState('')
   // const [newAuthor, setNewAuthor] = useState('')
@@ -50,17 +51,21 @@ const App = () => {
     return blogsArrayCopy
   }
 
+  
+
   /* useEffect hooks */
   // Get the blogs from the server
   useEffect(() => {
     async function fetchBlogs() {
+      // const initialBlogs = await blogService.getAll()
       const initialBlogs = await blogService.getAll()
 
       // setBlogs(initialBlogs)
 
       // Load blogs sorted (descending by default)
       const sortedBlogs = sortBlogs(initialBlogs, sortDirection)
-      setBlogs(sortedBlogs)
+      // setBlogs(sortedBlogs)
+      blogService.setValue(sortedBlogs)
     }
 
     fetchBlogs()
@@ -132,7 +137,8 @@ const App = () => {
       // setBlogs(updatedBlogsList)
 
       // to sort after adding:
-      setBlogs(sortBlogs(updatedBlogsList, sortDirection))
+      // setBlogs(sortBlogs(updatedBlogsList, sortDirection))
+      blogService.setValue(sortBlogs(updatedBlogsList, sortDirection))
 
       // if (newAuthor) {
       if (formAuthor.value) {
@@ -182,7 +188,8 @@ const App = () => {
           return updatedBlog
         }
       })
-      setBlogs(updatedBlogsList)
+      // setBlogs(updatedBlogsList)
+      blogService.setValue(updatedBlogsList)
 
       // to sort blogs after updating:
       // setBlogs(sortBlogs(updatedBlogsList, sortDirection))
@@ -201,7 +208,8 @@ const App = () => {
     try {
       if (window.confirm(`Do you want to delete ${blog.title}`)) {
         const updatedBlogsList = await blogService.deleteEntry(blogId)
-        setBlogs(updatedBlogsList)
+        // setBlogs(updatedBlogsList)
+        blogService.setValue(updatedBlogsList)
       }
     } catch (error) {
       setErrorMessage('Failed to delete blog')
