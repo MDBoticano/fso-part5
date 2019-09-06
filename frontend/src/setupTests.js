@@ -5,9 +5,13 @@ let savedItems = {}
 
 const localStorageMock = {
   setItem: (key, item) => {
+    // console.log(`saving ${item} to ${key}`)
     savedItems[key] = item
   },
-  getItem: (key) => savedItems[key],
+  getItem: (key) => {
+    // console.log(`getting ${key}`) 
+    return savedItems[key]
+  },
   clear: () => {
     savedItems = {}
   }

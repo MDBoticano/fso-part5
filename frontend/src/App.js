@@ -59,11 +59,15 @@ const App = () => {
 
   // Check for logged in user
   useEffect(() => {
+    // console.log('logging in user')
     const loggedInUser = window.localStorage.getItem('loggedBlogUser')
     if (loggedInUser) {
+      // console.log('user exists, logging in')
       const user = JSON.parse(loggedInUser)
       setUser(user)
       blogService.setToken(user.token)
+    } else {
+      // console.log('no user, login please')
     }
   }, [])
 
