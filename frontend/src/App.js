@@ -267,11 +267,14 @@ const App = () => {
             <CreateBlog
               addBlog={addBlog}
               // handleTitle={handleTitle} title={newTitle}
-              handleTitle={formTitle.onChange} title={formTitle.value}
+              // handleTitle={formTitle.onChange} title={formTitle.value}
+              title={removeReset(formTitle)}
               // handleAuthor={handleAuthor} author={newAuthor}
-              handleAuthor={formAuthor.onChange} author={formAuthor.value}
+              // handleAuthor={formAuthor.onChange} author={formAuthor.value}
+              author={removeReset(formAuthor)}
               // handleUrl={handleUrl} url={newUrl}
-              handleUrl={formUrl.onChange} url={formUrl.value}
+              // handleUrl={formUrl.onChange} url={formUrl.value}
+              url={removeReset(formUrl)}
             />
           </Toggleable>
         </div>
