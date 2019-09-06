@@ -9,7 +9,7 @@ import CreateBlog from './components/CreateBlog'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
-import useField from './hooks/index'
+import { useField, useResource } from './hooks/index'
 
 const App = () => {
   const ASCENDING = 'ascending'
@@ -23,9 +23,9 @@ const App = () => {
   // const [newAuthor, setNewAuthor] = useState('')
   // const [newUrl, setNewUrl] = useState('')
 
-  const formTitle = useField('')
-  const formAuthor = useField('')
-  const formUrl = useField('')
+  const formTitle = useField('text')
+  const formAuthor = useField('text')
+  const formUrl = useField('text')
 
   const [errorMessage, setErrorMessage] = useState(null)
   const [successMessage, setSuccessMessage] = useState(null)
