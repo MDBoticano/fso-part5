@@ -7,8 +7,8 @@ const useField = (type) => {
     setValue(event.target.value)
   }
 
-  const reset = () => {
-    setValue('')
+  const reset = () => { return () => { return setValue('') }
+    
   }
 
   return {

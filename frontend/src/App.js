@@ -34,7 +34,7 @@ const App = () => {
   const [user, setUser] = useState(null)
 
   const loginUsername = useField('text')
-  const loginPassword = useField('text')
+  const loginPassword = useField('password')
 
   const [sortDirection, setSortDirection] = useState(DESCENDING)
 
@@ -236,15 +236,24 @@ const App = () => {
     if (sortDirection === DESCENDING) { setSortDirection(ASCENDING) }
   }
 
-  const loginForm = () => (
+  const removeReset = (fieldProp) => {
+    const { reset, ...restOfProps } = fieldProp
+    return restOfProps
+  }
+
+  const loginForm = () => {
+    return (
     <Toggleable buttonLabel="login">
       <LoginForm
-        username={loginUsername.value} handleUsername={loginUsername.onChange}
-        password={loginPassword.value} handlePassword={loginPassword.onChange}
+        // username={loginUsername.value} handleUsername={loginUsername.onChange}
+        loginUsername={removeReset(loginUsername)}
+        // password={loginPassword.value} handlePassword={loginPassword.onChange}
+        loginPassword={removeReset(loginPassword)}
         handleLogin={handleLogin}
       />
     </Toggleable>
-  )
+    )
+  }
 
   const blogFormRef = React.createRef()
 
