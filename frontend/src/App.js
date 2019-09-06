@@ -9,6 +9,8 @@ import CreateBlog from './components/CreateBlog'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
+import useField from './hooks/index'
+
 const App = () => {
   const ASCENDING = 'ascending'
   const DESCENDING = 'descending'
@@ -21,11 +23,18 @@ const App = () => {
   const [newAuthor, setNewAuthor] = useState('')
   const [newUrl, setNewUrl] = useState('')
 
+  // const formTitle = useField('')
+  // const formAuthor = useField('')
+  // const formUrl = useField('')
+
   const [errorMessage, setErrorMessage] = useState(null)
   const [successMessage, setSuccessMessage] = useState(null)
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  // const [username, setUsername] = useState('')
+  // const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
+
+  const loginUsername = useField('text')
+  const loginPassword = useField('text')
 
   const [sortDirection, setSortDirection] = useState(DESCENDING)
 
@@ -74,6 +83,8 @@ const App = () => {
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
+      let username = loginUsername.value
+      let password = loginPassword.value
       const user = await loginService.login({
         username, password
       })
@@ -81,8 +92,8 @@ const App = () => {
       window.localStorage.setItem('loggedBlogUser', JSON.stringify(user))
       blogService.setToken(user.token)
       setUser(user)
-      setUsername('')
-      setPassword('')
+      // setUsername('')
+      // setPassword('')
     } catch (exception) {
       setErrorMessage('Wrong credentials')
       setTimeout(() => {
@@ -185,13 +196,13 @@ const App = () => {
     }
   }
 
-  const handleUsername = ({ target }) => {
-    setUsername(target.value)
-  }
+  // const handleUsername = ({ target }) => {
+  //   setUsername(target.value)
+  // }
 
-  const handlePassword = ({ target }) => {
-    setPassword(target.value)
-  }
+  // const handlePassword = ({ target }) => {
+  //   setPassword(target.value)
+  // }
 
   const handleTitle = ({ target }) => {
     setNewTitle(target.value)
@@ -213,8 +224,8 @@ const App = () => {
   const loginForm = () => (
     <Toggleable buttonLabel="login">
       <LoginForm
-        username={username} handleUsername={handleUsername}
-        password={password} handlePassword={handlePassword}
+        username={loginUsername.value} handleUsername={loginUsername.onChange}
+        password={loginPassword.value} handlePassword={loginPassword.onChange}
         handleLogin={handleLogin}
       />
     </Toggleable>
